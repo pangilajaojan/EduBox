@@ -1,0 +1,206 @@
+<div class="forum-container">
+  <div class="forum-header">
+    <h1>EduBox Community Forum</h1>
+    <p>Connect, learn, and share your LED cube projects with the community</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <div class="search-box">
+      <ion-searchbar 
+        [(ngModel)]="searchQuery" 
+        (ionInput)="onSearchChange()"
+        placeholder="Search topics, tags, or content..."
+        class="custom-searchbar">
+      </ion-searchbar>
+    </div>
+
+    <div class="filter-controls">
+      <ion-select 
+        [(ngModel)]="selectedCategory" 
+        (ionChange)="onCategoryChange()"
+        interface="popover"
+        class="category-select">
+        <ion-select-option 
+          *ngFor="let category of categories" 
+          [value]="category.value">
+          {{ category.label }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button 
+        (click)="isCreatingPost = true"
+        class="create-post-btn">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Create New Post
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Create Post Modal -->
+  <div class="create-post-modal" *ngIf="isCreatingPost">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Post</h3>
+        <ion-button 
+          (click)="cancelPost()" 
+          fill="clear" 
+          size="small">
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+
+      <form (ngSubmit)="createPost()" class="post-form">
+        <div class="form-group">
+          <ion-label position="stacked">Title *</ion-label>
+          <ion-input 
+            [(ngModel)]="newPost.title" 
+            name="title"
+            placeholder="Enter post title"
+            required>
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Category</ion-label>
+          <ion-select 
+            [(ngModel)]="newPost.category" 
+            name="category"
+            interface="popover">
+            <ion-select-option 
+              *ngFor="let category of categories.slice(1)" 
+              [value]="category.value">
+              {{ category.label }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Tags (comma separated)</ion-label>
+          <ion-input 
+            [(ngModel)]="newPost.tags" 
+            name="tags"
+            placeholder="e.g., beginner, pattern, game">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Content *</ion-label>
+          <ion-textarea 
+            [(ngModel)]="newPost.content" 
+            name="content"
+            placeholder="Write your post content here..."
+            rows="6"
+            required>
+          </ion-textarea>
+        </div>
+
+        <div class="form-actions">
+          <ion-button 
+            type="button" 
+            (click)="cancelPost()" 
+            fill="outline"
+            color="medium">
+            Cancel
+          </ion-button>
+          <ion-button 
+            type="submit" 
+            class="submit-btn">
+            <ion-icon name="send" slot="start"></ion-icon>
+            Post
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Posts List -->
+  <div class="posts-section">
+    <div class="posts-header">
+      <h2>Topics ({{ filteredPosts.length }})</h2>
+    </div>
+
+    <div class="posts-list">
+      <div class="post-item" *ngFor="let post of filteredPosts" [class.sticky]="post.isSticky">
+        <div class="post-header">
+          <div class="post-title-section">
+            <h3 class="post-title">
+              <ion-icon 
+                name="pin" 
+                *ngIf="post.isSticky" 
+                color="warning"
+                class="sticky-icon">
+              </ion-icon>
+              {{ post.title }}
+            </h3>
+            <div class="post-meta">
+              <span class="post-author">by {{ post.author }}</span>
+              <span class="post-date">{{ post.date }}</span>
+            </div>
+          </div>
+          
+          <div class="post-category">
+            <ion-chip 
+              [style.--background]="getCategoryColor(post.category)"
+              color="primary">
+              {{ getCategoryLabel(post.category) }}
+            </ion-chip>
+          </div>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.content }}</p>
+        </div>
+
+        <div class="post-tags">
+          <ion-chip 
+            *ngFor="let tag of post.tags" 
+            size="small"
+            fill="outline"
+            color="medium">
+            {{ tag }}
+          </ion-chip>
+        </div>
+
+        <div class="post-stats">
+          <div class="stat-item">
+            <ion-icon name="chatbubbles" color="primary"></ion-icon>
+            <span>{{ post.replies }} replies</span>
+          </div>
+          <div class="stat-item">
+            <ion-icon name="eye" color="secondary"></ion-icon>
+            <span>{{ post.views }} views</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredPosts.length === 0">
+      <ion-icon name="search" color="medium" class="empty-icon"></ion-icon>
+      <h3>No posts found</h3>
+      <p>Try adjusting your search or category filters</p>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <div class="action-card">
+      <ion-icon name="trending-up" color="success"></ion-icon>
+      <h4>Trending Topics</h4>
+      <p>See what's popular in the community</p>
+    </div>
+    
+    <div class="action-card">
+      <ion-icon name="star" color="warning"></ion-icon>
+      <h4>Featured Posts</h4>
+      <p>Check out our highlighted content</p>
+    </div>
+    
+    <div class="action-card">
+      <ion-icon name="people" color="primary"></ion-icon>
+      <h4>Community Guidelines</h4>
+      <p>Learn how to be a great community member</p>
+    </div>
+  </div>
+</div>

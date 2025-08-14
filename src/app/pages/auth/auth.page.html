@@ -1,0 +1,97 @@
+<ion-content class="auth-content">
+  <div class="auth-container">
+    <div class="logo-section">
+      <div class="logo">
+        <ion-icon name="cube" class="logo-icon"></ion-icon>
+        <h1 class="logo-text">EduBox</h1>
+      </div>
+      <p class="tagline">Platform Pembelajaran Inovatif untuk Revolusi Industri 5.0</p>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>{{ isLogin ? 'Welcome Back!' : 'Join EduBox' }}</h2>
+        <p>{{ isLogin ? 'Sign in to continue your learning journey' : 'Start your coding adventure today' }}</p>
+      </div>
+
+      <form (ngSubmit)="isLogin ? login() : register()" class="auth-form">
+        <div class="form-group" *ngIf="!isLogin">
+          <ion-label position="stacked">Full Name</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="name" 
+            name="name"
+            placeholder="Enter your full name"
+            class="custom-input">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            name="email"
+            placeholder="Enter your email"
+            class="custom-input">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="password" 
+            name="password"
+            placeholder="Enter your password"
+            class="custom-input">
+          </ion-input>
+        </div>
+
+        <div class="form-group" *ngIf="!isLogin">
+          <ion-label position="stacked">Confirm Password</ion-label>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="confirmPassword" 
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            class="custom-input">
+          </ion-input>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          class="auth-button"
+          [disabled]="loading">
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+          <span *ngIf="!loading">{{ isLogin ? 'Sign In' : 'Create Account' }}</span>
+        </ion-button>
+      </form>
+
+      <div class="auth-footer">
+        <p>
+          {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
+          <a href="#" (click)="toggleMode()" class="toggle-link">
+            {{ isLogin ? 'Sign Up' : 'Sign In' }}
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="features-preview">
+      <div class="feature-item">
+        <ion-icon name="code-slash" class="feature-icon"></ion-icon>
+        <span>LED Cube Coding</span>
+      </div>
+      <div class="feature-item">
+        <ion-icon name="people" class="feature-icon"></ion-icon>
+        <span>Community Forum</span>
+      </div>
+      <div class="feature-item">
+        <ion-icon name="library" class="feature-icon"></ion-icon>
+        <span>Code Library</span>
+      </div>
+    </div>
+  </div>
+</ion-content>

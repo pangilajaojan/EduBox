@@ -1,0 +1,84 @@
+<ion-app>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="toggleSidebar()" fill="clear">
+          <ion-icon name="menu" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      
+      <ion-title class="header-title">
+        <div class="title-content">
+          <ion-icon name="cube" class="title-icon"></ion-icon>
+          <span>EduBox</span>
+        </div>
+      </ion-title>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="selectTab('profile')" fill="clear" class="profile-button">
+          <ion-icon name="person-circle" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="landing-container">
+      <!-- Sidebar -->
+      <div class="sidebar" [class.open]="isSidebarOpen">
+        <div class="sidebar-header">
+          <h3>Navigation</h3>
+          <ion-button (click)="closeSidebar()" fill="clear" class="close-btn">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <h4>Main Features</h4>
+            <div class="nav-item" [class.active]="selectedTab === 'dashboard'" (click)="selectTab('dashboard')">
+              <ion-icon name="home" slot="start"></ion-icon>
+              <span>Dashboard</span>
+            </div>
+            <div class="nav-item" [class.active]="selectedTab === 'coding'" (click)="selectTab('coding')">
+              <ion-icon name="code-slash" slot="start"></ion-icon>
+              <span>LED Cube Coding</span>
+            </div>
+            <div class="nav-item" [class.active]="selectedTab === 'forum'" (click)="selectTab('forum')">
+              <ion-icon name="people" slot="start"></ion-icon>
+              <span>EduBox Forum</span>
+            </div>
+            <div class="nav-item" [class.active]="selectedTab === 'library'" (click)="selectTab('library')">
+              <ion-icon name="library" slot="start"></ion-icon>
+              <span>Library & Presets</span>
+            </div>
+            <div class="nav-item" [class.active]="selectedTab === 'devices'" (click)="selectTab('devices')">
+              <ion-icon name="bluetooth" slot="start"></ion-icon>
+              <span>Device Manager</span>
+            </div>
+          </div>
+
+          <div class="nav-section">
+            <h4>Account</h4>
+            <div class="nav-item" [class.active]="selectedTab === 'profile'" (click)="selectTab('profile')">
+              <ion-icon name="person" slot="start"></ion-icon>
+              <span>Profile</span>
+            </div>
+            <div class="nav-item" (click)="logout()">
+              <ion-icon name="log-out" slot="start"></ion-icon>
+              <span>Logout</span>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- Mobile Overlay -->
+      <div class="sidebar-overlay" [class.active]="isSidebarOpen" (click)="closeSidebar()"></div>
+    </div>
+  </ion-content>
+</ion-app>

@@ -1,0 +1,384 @@
+.devices-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.devices-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #1972a4 0%, #1a8bc8 100%);
+  border-radius: 20px;
+  color: white;
+  
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+  }
+  
+  p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.scanning-section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.scanning-header {
+  text-align: center;
+  margin-bottom: 24px;
+  
+  h2 {
+    color: #1972a4;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  
+  p {
+    color: #666;
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.scanning-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.scan-btn {
+  --background: linear-gradient(135deg, #1972a4 0%, #1a8bc8 100%);
+  --border-radius: 8px;
+  --font-weight: 600;
+  --box-shadow: 0 4px 12px rgba(25, 114, 164, 0.3);
+}
+
+.scan-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #1972a4;
+  font-weight: 500;
+  
+  ion-spinner {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.devices-section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e0e0e0;
+  
+  h2 {
+    color: #1972a4;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.devices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.device-card {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 24px;
+  border-left: 4px solid #e0e0e0;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  &.connected {
+    border-left-color: #1972a4;
+    background: linear-gradient(135deg, #f0f8ff 0%, #f8f9fa 100%);
+  }
+  
+  &.connecting {
+    border-left-color: #f5b202;
+    background: linear-gradient(135deg, #fff9e6 0%, #f8f9fa 100%);
+  }
+}
+
+.device-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.device-info {
+  flex: 1;
+  min-width: 0;
+  
+  h3 {
+    color: #1972a4;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  
+  .device-type {
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.device-status {
+  ion-chip {
+    --color: white;
+    font-weight: 600;
+    font-size: 12px;
+  }
+}
+
+.device-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 14px;
+  
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+.device-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    color: #1972a4;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.stats-section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  h2 {
+    color: #1972a4;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    text-align: center;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    
+    ion-icon {
+      font-size: 28px;
+    }
+  }
+  
+  .stat-content {
+    h3 {
+      color: #1972a4;
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+    }
+    
+    p {
+      color: #666;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+
+.help-section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  h2 {
+    color: #1972a4;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    text-align: center;
+  }
+}
+
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.help-card {
+  text-align: center;
+  padding: 24px;
+  border-radius: 16px;
+  background: #f8f9fa;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  h4 {
+    color: #1972a4;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+  }
+  
+  p {
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .devices-header {
+    padding: 24px 16px;
+    
+    h1 {
+      font-size: 28px;
+    }
+    
+    p {
+      font-size: 16px;
+    }
+  }
+  
+  .scanning-controls {
+    flex-direction: column;
+    align-items: stretch;
+    
+    ion-button {
+      width: 100%;
+    }
+  }
+  
+  .devices-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .device-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .device-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .device-actions {
+    flex-direction: column;
+    
+    ion-button {
+      width: 100%;
+    }
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .help-grid {
+    grid-template-columns: 1fr;
+  }
+}

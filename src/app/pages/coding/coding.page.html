@@ -1,0 +1,179 @@
+<div class="coding-container">
+  <div class="coding-header">
+    <h1>LED Cube Coding Studio</h1>
+    <p>Write, test, and preview your LED cube animations in real-time</p>
+  </div>
+
+  <div class="coding-layout">
+    <!-- Code Editor Section -->
+    <div class="editor-section">
+      <div class="editor-header">
+        <h3>Code Editor</h3>
+        <div class="editor-controls">
+          <ion-select 
+            [(ngModel)]="selectedLanguage" 
+            interface="popover"
+            class="language-select">
+            <ion-select-option 
+              *ngFor="let lang of languages" 
+              [value]="lang.value">
+              {{ lang.label }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+
+      <div class="code-editor">
+        <textarea 
+          [(ngModel)]="code" 
+          placeholder="Write your LED cube code here..."
+          class="code-textarea">
+        </textarea>
+      </div>
+
+      <div class="editor-actions">
+        <ion-button 
+          (click)="runCode()" 
+          [disabled]="isRunning"
+          class="run-button">
+          <ion-icon name="play" slot="start"></ion-icon>
+          {{ isRunning ? 'Running...' : 'Run Code' }}
+        </ion-button>
+        
+        <ion-button 
+          (click)="stopCode()" 
+          [disabled]="!isRunning"
+          fill="outline"
+          color="danger">
+          <ion-icon name="stop" slot="start"></ion-icon>
+          Stop
+        </ion-button>
+        
+        <ion-button 
+          (click)="saveCode()" 
+          fill="outline"
+          color="success">
+          <ion-icon name="save" slot="start"></ion-icon>
+          Save
+        </ion-button>
+        
+        <ion-button 
+          (click)="loadCode()" 
+          fill="outline"
+          color="medium">
+          <ion-icon name="folder-open" slot="start"></ion-icon>
+          Load
+        </ion-button>
+        
+        <ion-button 
+          (click)="clearCode()" 
+          fill="outline"
+          color="warning">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Clear
+        </ion-button>
+      </div>
+
+      <div class="output-console">
+        <h4>Output Console</h4>
+        <div class="console-content">
+          <pre>{{ output }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- LED Cube Preview Section -->
+    <div class="preview-section">
+      <div class="preview-header">
+        <h3>LED Cube Preview</h3>
+        <p>Real-time visualization of your code</p>
+      </div>
+
+      <div class="cube-preview">
+        <canvas #canvas class="cube-canvas"></canvas>
+      </div>
+
+      <div class="preview-info">
+        <div class="info-item">
+          <ion-icon name="information-circle" color="primary"></ion-icon>
+          <span>4x4x4 LED Cube (64 LEDs)</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="color-palette" color="success"></ion-icon>
+          <span>Full RGB Color Support</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="speedometer" color="warning"></ion-icon>
+          <span>60 FPS Animation</span>
+        </div>
+      </div>
+
+      <div class="quick-templates">
+        <h4>Quick Templates</h4>
+        <div class="template-buttons">
+          <ion-button 
+            fill="outline" 
+            size="small"
+            (click)="loadTemplate('rainbow')">
+            Rainbow
+          </ion-button>
+          <ion-button 
+            fill="outline" 
+            size="small"
+            (click)="loadTemplate('wave')">
+            Wave
+          </ion-button>
+          <ion-button 
+            fill="outline" 
+            size="small"
+            (click)="loadTemplate('spiral')">
+            Spiral
+          </ion-button>
+          <ion-button 
+            fill="outline" 
+            size="small"
+            (click)="loadTemplate('game')">
+            Game
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Examples Section -->
+  <div class="examples-section">
+    <h2>Code Examples</h2>
+    <div class="examples-grid">
+      <div class="example-card">
+        <h4>Basic Animation</h4>
+        <pre><code>function loop() {
+  for (let i = 0; i < 64; i++) {
+    cube.setPixel(i, randomColor());
+  }
+  cube.show();
+  delay(100);
+}</code></pre>
+      </div>
+      
+      <div class="example-card">
+        <h4>Pattern Generator</h4>
+        <pre><code>function createPattern() {
+  let pattern = [];
+  for (let i = 0; i < 64; i++) {
+    pattern[i] = (i % 2 === 0) ? RED : BLUE;
+  }
+  return pattern;
+}</code></pre>
+      </div>
+      
+      <div class="example-card">
+        <h4>Interactive Control</h4>
+        <pre><code>function handleInput(x, y, z) {
+  let index = x + y * 4 + z * 16;
+  cube.setPixel(index, getCurrentColor());
+  cube.show();
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,250 @@
+<div class="devices-container">
+  <div class="devices-header">
+    <h1>Device Manager</h1>
+    <p>Scan, connect, and manage your LED cube devices</p>
+  </div>
+
+  <!-- Scanning Controls -->
+  <div class="scanning-section">
+    <div class="scanning-header">
+      <h2>Device Discovery</h2>
+      <p>Find and connect to nearby LED cube devices</p>
+    </div>
+
+    <div class="scanning-controls">
+      <ion-button 
+        (click)="startScan()" 
+        [disabled]="isScanning"
+        class="scan-btn">
+        <ion-icon name="bluetooth" slot="start"></ion-icon>
+        {{ isScanning ? 'Scanning...' : 'Start Scan' }}
+      </ion-button>
+      
+      <ion-button 
+        (click)="stopScan()" 
+        [disabled]="!isScanning"
+        fill="outline"
+        color="danger">
+        <ion-icon name="stop" slot="start"></ion-icon>
+        Stop Scan
+      </ion-button>
+      
+      <ion-button 
+        (click)="refreshDevices()" 
+        fill="outline"
+        color="medium">
+        <ion-icon name="refresh" slot="start"></ion-icon>
+        Refresh
+      </ion-button>
+    </div>
+
+    <div class="scan-status" *ngIf="isScanning">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <span>Scanning for devices...</span>
+    </div>
+  </div>
+
+  <!-- Connected Devices -->
+  <div class="devices-section" *ngIf="connectedDevices.length > 0">
+    <div class="section-header">
+      <h2>Connected Devices ({{ connectedDevices.length }})</h2>
+    </div>
+
+    <div class="devices-grid">
+      <div class="device-card connected" *ngFor="let device of connectedDevices">
+        <div class="device-header">
+          <div class="device-info">
+            <h3>{{ device.name }}</h3>
+            <p class="device-type">{{ device.type }}</p>
+          </div>
+          <div class="device-status">
+            <ion-chip 
+              [style.--background]="getStatusColor(device.status)"
+              color="primary"
+              size="small">
+              {{ device.status }}
+            </ion-chip>
+          </div>
+        </div>
+
+        <div class="device-details">
+          <div class="detail-item">
+            <ion-icon name="battery" [color]="getBatteryColor(device.battery)"></ion-icon>
+            <span>{{ device.battery }}%</span>
+          </div>
+          <div class="detail-item">
+            <ion-icon 
+              [name]="getSignalIcon(device.signal)" 
+              [color]="getSignalColor(device.signal)">
+            </ion-icon>
+            <span>{{ device.signal }}</span>
+          </div>
+          <div class="detail-item">
+            <ion-icon name="information-circle" color="medium"></ion-icon>
+            <span>{{ device.firmware }}</span>
+          </div>
+        </div>
+
+        <div class="device-actions">
+          <ion-button 
+            (click)="disconnectDevice(device)"
+            fill="outline"
+            size="small"
+            color="danger">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+            Disconnect
+          </ion-button>
+          
+          <ion-button 
+            (click)="updateFirmware(device)"
+            [disabled]="device.status === 'updating'"
+            fill="outline"
+            size="small"
+            color="warning">
+            <ion-icon name="download" slot="icon-only"></ion-icon>
+            {{ device.status === 'updating' ? 'Updating...' : 'Update Firmware' }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Available Devices -->
+  <div class="devices-section">
+    <div class="section-header">
+      <h2>Available Devices ({{ availableDevices.filter(d => d.status === 'available').length }})</h2>
+    </div>
+
+    <div class="devices-grid">
+      <div class="device-card" *ngFor="let device of availableDevices" [class.connecting]="device.status === 'connecting'">
+        <div class="device-header">
+          <div class="device-info">
+            <h3>{{ device.name }}</h3>
+            <p class="device-type">{{ device.type }}</p>
+          </div>
+          <div class="device-status">
+            <ion-chip 
+              [style.--background]="getStatusColor(device.status)"
+              color="primary"
+              size="small">
+              {{ device.status }}
+            </ion-chip>
+          </div>
+        </div>
+
+        <div class="device-details">
+          <div class="detail-item">
+            <ion-icon name="battery" [color]="getBatteryColor(device.battery)"></ion-icon>
+            <span>{{ device.battery }}%</span>
+          </div>
+          <div class="detail-item">
+            <ion-icon 
+              [name]="getSignalIcon(device.signal)" 
+              [color]="getSignalColor(device.signal)">
+            </ion-icon>
+            <span>{{ device.signal }}</span>
+          </div>
+          <div class="detail-item">
+            <ion-icon name="time" color="medium"></ion-icon>
+            <span>{{ device.lastSeen }}</span>
+          </div>
+        </div>
+
+        <div class="device-actions">
+          <ion-button 
+            (click)="connectDevice(device)"
+            [disabled]="device.status !== 'available'"
+            fill="outline"
+            size="small"
+            color="primary">
+            <ion-icon name="link" slot="icon-only"></ion-icon>
+            {{ device.status === 'connecting' ? 'Connecting...' : 'Connect' }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="availableDevices.filter(d => d.status === 'available').length === 0">
+      <ion-icon name="bluetooth" color="medium" class="empty-icon"></ion-icon>
+      <h3>No devices found</h3>
+      <p>Start scanning to discover nearby LED cube devices</p>
+    </div>
+  </div>
+
+  <!-- Device Statistics -->
+  <div class="stats-section">
+    <h2>Device Statistics</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background-color: #1972a4;">
+          <ion-icon name="bluetooth" color="white"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ availableDevices.length }}</h3>
+          <p>Total Devices</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background-color: #28a745;">
+          <ion-icon name="checkmark-circle" color="white"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ connectedDevices.length }}</h3>
+          <p>Connected</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background-color: #f5b202;">
+          <ion-icon name="battery-charging" color="white"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ Math.round(availableDevices.reduce((sum, d) => sum + d.battery, 0) / availableDevices.length) }}%</h3>
+          <p>Avg Battery</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background-color: #6f42c1;">
+          <ion-icon name="code" color="white"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ availableDevices.filter(d => d.type === 'LED Cube').length }}</h3>
+          <p>LED Cubes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connection Help -->
+  <div class="help-section">
+    <h2>Connection Help</h2>
+    <div class="help-grid">
+      <div class="help-card">
+        <ion-icon name="bluetooth" color="primary"></ion-icon>
+        <h4>Bluetooth Connection</h4>
+        <p>Make sure your device has Bluetooth enabled and is discoverable</p>
+      </div>
+      
+      <div class="help-card">
+        <ion-icon name="wifi" color="success"></ion-icon>
+        <h4>WiFi Connection</h4>
+        <p>Some devices support WiFi connectivity for faster data transfer</p>
+      </div>
+      
+      <div class="help-card">
+        <ion-icon name="settings" color="warning"></ion-icon>
+        <h4>Device Settings</h4>
+        <p>Check device settings and ensure it's in pairing mode</p>
+      </div>
+      
+      <div class="help-card">
+        <ion-icon name="help-circle" color="medium"></ion-icon>
+        <h4>Troubleshooting</h4>
+        <p>If connection fails, try restarting both devices</p>
+      </div>
+    </div>
+  </div>
+</div>

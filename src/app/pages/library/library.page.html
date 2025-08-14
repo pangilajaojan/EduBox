@@ -1,0 +1,274 @@
+<div class="library-container">
+  <div class="library-header">
+    <h1>Library & Presets</h1>
+    <p>Discover, download, and share LED cube code presets and projects</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <div class="search-box">
+      <ion-searchbar 
+        [(ngModel)]="searchQuery" 
+        (ionInput)="onSearchChange()"
+        placeholder="Search presets, projects, or tutorials..."
+        class="custom-searchbar">
+      </ion-searchbar>
+    </div>
+
+    <div class="filter-controls">
+      <ion-select 
+        [(ngModel)]="selectedCategory" 
+        (ionChange)="onCategoryChange()"
+        interface="popover"
+        class="filter-select">
+        <ion-select-option 
+          *ngFor="let category of categories" 
+          [value]="category.value">
+          {{ category.label }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select 
+        [(ngModel)]="selectedType" 
+        (ionChange)="onTypeChange()"
+        interface="popover"
+        class="filter-select">
+        <ion-select-option 
+          *ngFor="let type of types" 
+          [value]="type.value">
+          {{ type.label }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button 
+        (click)="isUploading = true"
+        class="upload-btn">
+        <ion-icon name="cloud-upload" slot="start"></ion-icon>
+        Upload Project
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Upload Project Modal -->
+  <div class="upload-modal" *ngIf="isUploading">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Upload New Project</h3>
+        <ion-button 
+          (click)="isUploading = false" 
+          fill="clear" 
+          size="small">
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+
+      <form (ngSubmit)="uploadProject()" class="upload-form">
+        <div class="form-group">
+          <ion-label position="stacked">Project Name *</ion-label>
+          <ion-input 
+            [(ngModel)]="newProject.name" 
+            name="name"
+            placeholder="Enter project name"
+            required>
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Description *</ion-label>
+          <ion-textarea 
+            [(ngModel)]="newProject.description" 
+            name="description"
+            placeholder="Describe your project..."
+            rows="3"
+            required>
+          </ion-textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <ion-label position="stacked">Category</ion-label>
+            <ion-select 
+              [(ngModel)]="newProject.category" 
+              name="category"
+              interface="popover">
+              <ion-select-option 
+                *ngFor="let category of categories.slice(1)" 
+                [value]="category.value">
+                {{ category.label }}
+              </ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="form-group">
+            <ion-label position="stacked">Type</ion-label>
+            <ion-select 
+              [(ngModel)]="newProject.type" 
+              name="type"
+              interface="popover">
+              <ion-select-option 
+                *ngFor="let type of types.slice(1)" 
+                [value]="type.value">
+                {{ type.label }}
+              </ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Tags (comma separated)</ion-label>
+          <ion-input 
+            [(ngModel)]="newProject.tags" 
+            name="tags"
+            placeholder="e.g., beginner, animation, game">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Code *</ion-label>
+          <ion-textarea 
+            [(ngModel)]="newProject.code" 
+            name="code"
+            placeholder="Paste your LED cube code here..."
+            rows="8"
+            required>
+          </ion-textarea>
+        </div>
+
+        <div class="form-actions">
+          <ion-button 
+            type="button" 
+            (click)="isUploading = false" 
+            fill="outline"
+            color="medium">
+            Cancel
+          </ion-button>
+          <ion-button 
+            type="submit" 
+            class="submit-btn">
+            <ion-icon name="cloud-upload" slot="start"></ion-icon>
+            Upload Project
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Presets Grid -->
+  <div class="presets-section">
+    <div class="presets-header">
+      <h2>Available Presets ({{ filteredPresets.length }})</h2>
+    </div>
+
+    <div class="presets-grid">
+      <div class="preset-card" *ngFor="let preset of filteredPresets">
+        <div class="preset-header">
+          <div class="preset-title-section">
+            <h3 class="preset-title">
+              <ion-icon 
+                name="star" 
+                *ngIf="preset.isPremium" 
+                color="warning"
+                class="premium-icon">
+              </ion-icon>
+              {{ preset.name }}
+            </h3>
+            <div class="preset-meta">
+              <span class="preset-author">by {{ preset.author }}</span>
+            </div>
+          </div>
+          
+          <div class="preset-badges">
+            <ion-chip 
+              [style.--background]="getCategoryColor(preset.category)"
+              color="primary"
+              size="small">
+              {{ getCategoryLabel(preset.category) }}
+            </ion-chip>
+            <ion-chip 
+              [style.--background]="getTypeColor(preset.type)"
+              color="secondary"
+              size="small">
+              {{ getTypeLabel(preset.type) }}
+            </ion-chip>
+          </div>
+        </div>
+
+        <div class="preset-content">
+          <p>{{ preset.description }}</p>
+        </div>
+
+        <div class="preset-tags">
+          <ion-chip 
+            *ngFor="let tag of preset.tags" 
+            size="small"
+            fill="outline"
+            color="medium">
+            {{ tag }}
+          </ion-chip>
+        </div>
+
+        <div class="preset-stats">
+          <div class="stat-item">
+            <ion-icon name="download" color="success"></ion-icon>
+            <span>{{ preset.downloads }}</span>
+          </div>
+          <div class="stat-item">
+            <ion-icon name="star" color="warning"></ion-icon>
+            <span>{{ preset.rating }}</span>
+          </div>
+        </div>
+
+        <div class="preset-actions">
+          <ion-button 
+            (click)="downloadPreset(preset)"
+            fill="outline"
+            size="small"
+            color="primary">
+            <ion-icon name="download" slot="start"></ion-icon>
+            Download
+          </ion-button>
+          
+          <ion-button 
+            fill="outline"
+            size="small"
+            color="secondary">
+            <ion-icon name="eye" slot="start"></ion-icon>
+            Preview
+          </ion-button>
+        </div>
+
+        <div class="code-preview" *ngIf="preset.code">
+          <h4>Code Preview</h4>
+          <pre><code>{{ preset.code.substring(0, 200) }}{{ preset.code.length > 200 ? '...' : '' }}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredPresets.length === 0">
+      <ion-icon name="library" color="medium" class="empty-icon"></ion-icon>
+      <h3>No presets found</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+  </div>
+
+  <!-- Featured Categories -->
+  <div class="featured-categories">
+    <h2>Featured Categories</h2>
+    <div class="categories-grid">
+      <div class="category-card" *ngFor="let category of categories.slice(1)">
+        <div class="category-icon" [style.background-color]="getCategoryColor(category.value)">
+          <ion-icon 
+            [name]="category.value === 'animation' ? 'play' : 
+                    category.value === 'pattern' ? 'grid' : 
+                    category.value === 'game' ? 'game-controller' : 
+                    category.value === 'education' ? 'school' : 'diamond'" 
+            color="white">
+          </ion-icon>
+        </div>
+        <h4>{{ category.label }}</h4>
+        <p>{{ getCategoryDescription(category.value) }}</p>
+      </div>
+    </div>
+  </div>
+</div>

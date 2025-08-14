@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyDAPhGAb4hDaPGT_Vy60zVm_pZGEgpyPws",
+    authDomain: "edubox.firebaseapp.com",
+    projectId: "edubox",
+    storageBucket: "edubox.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdefghijklmnop"
+  }
 };
 
 /*

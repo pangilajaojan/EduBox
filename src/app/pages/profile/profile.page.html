@@ -1,0 +1,216 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <ion-avatar>
+        <img [src]="user?.photoURL || 'assets/icon/favicon.png'" alt="Profile">
+      </ion-avatar>
+      <div class="profile-info">
+        <h1>{{ profileData.displayName || 'EduBox User' }}</h1>
+        <p class="user-level">Level {{ getLevel() }} • {{ profileData.location }}</p>
+        <p class="user-bio">{{ profileData.bio }}</p>
+      </div>
+    </div>
+    
+    <div class="profile-actions">
+      <ion-button 
+        (click)="startEditing()" 
+        *ngIf="!isEditing"
+        fill="outline"
+        color="primary">
+        <ion-icon name="create" slot="start"></ion-icon>
+        Edit Profile
+      </ion-button>
+      
+      <div class="edit-actions" *ngIf="isEditing">
+        <ion-button 
+          (click)="saveProfile()" 
+          color="success">
+          <ion-icon name="checkmark" slot="start"></ion-icon>
+          Save
+        </ion-button>
+        <ion-button 
+          (click)="cancelEditing()" 
+          fill="outline"
+          color="medium">
+          <ion-icon name="close" slot="start"></ion-icon>
+          Cancel
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Progress -->
+  <div class="level-section">
+    <div class="level-info">
+      <h3>Level {{ getLevel() }}</h3>
+      <p>{{ getLevelProgress() }}/100 XP to next level</p>
+    </div>
+    <div class="level-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getLevelProgress()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Form (when editing) -->
+  <div class="profile-form-section" *ngIf="isEditing">
+    <div class="form-card">
+      <h3>Edit Profile Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <ion-label position="stacked">Display Name *</ion-label>
+          <ion-input 
+            [(ngModel)]="profileData.displayName" 
+            name="displayName"
+            placeholder="Enter your display name"
+            required>
+          </ion-input>
+        </div>
+        
+        <div class="form-group">
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input 
+            [(ngModel)]="profileData.email" 
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            readonly>
+          </ion-input>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Bio</ion-label>
+        <ion-textarea 
+          [(ngModel)]="profileData.bio" 
+          name="bio"
+          placeholder="Tell us about yourself..."
+          rows="3">
+        </ion-textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <ion-label position="stacked">Location</ion-label>
+          <ion-input 
+            [(ngModel)]="profileData.location" 
+            name="location"
+            placeholder="Enter your location">
+          </ion-input>
+        </div>
+        
+        <div class="form-group">
+          <ion-label position="stacked">Website</ion-label>
+          <ion-input 
+            [(ngModel)]="profileData.website" 
+            name="website"
+            type="url"
+            placeholder="Enter your website">
+          </ion-input>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Skills</ion-label>
+        <ion-input 
+          [(ngModel)]="profileData.skills" 
+          name="skills"
+          placeholder="Enter your skills (comma separated)">
+        </ion-input>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-section">
+    <h2>Your Statistics</h2>
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats">
+        <div class="stat-icon">
+          <ion-icon [name]="stat.icon" color="primary"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <h3 class="stat-value">{{ stat.value }}</h3>
+          <p class="stat-label">{{ stat.label }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements -->
+  <div class="achievements-section">
+    <h2>Achievements ({{ achievements.filter(a => a.unlocked).length }}/{{ achievements.length }})</h2>
+    <div class="achievements-grid">
+      <div class="achievement-card" *ngFor="let achievement of achievements" [class.unlocked]="achievement.unlocked">
+        <div class="achievement-icon" [style.background-color]="achievement.color">
+          <ion-icon [name]="achievement.icon" color="white"></ion-icon>
+        </div>
+        <div class="achievement-content">
+          <h4>{{ achievement.title }}</h4>
+          <p>{{ achievement.description }}</p>
+        </div>
+        <div class="achievement-status">
+          <ion-icon 
+            [name]="achievement.unlocked ? 'checkmark-circle' : 'lock-closed'" 
+            [color]="achievement.unlocked ? 'success' : 'medium'">
+          </ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="activity-section">
+    <h2>Recent Activity</h2>
+    <div class="activity-list">
+      <div class="activity-item" *ngFor="let activity of recentActivity">
+        <div class="activity-icon">
+          <ion-icon [name]="activity.icon" color="primary"></ion-icon>
+        </div>
+        <div class="activity-content">
+          <p class="activity-text">
+            <strong>{{ activity.action }}</strong> 
+            <span class="activity-item">{{ activity.item }}</span>
+          </p>
+          <p class="activity-time">{{ activity.time }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills & Interests -->
+  <div class="skills-section">
+    <h2>Skills & Interests</h2>
+    <div class="skills-content">
+      <div class="skill-tags">
+        <ion-chip 
+          *ngFor="let skill of profileData.skills.split(',')" 
+          color="primary"
+          fill="outline">
+          {{ skill.trim() }}
+        </ion-chip>
+      </div>
+      
+      <div class="interests-grid">
+        <div class="interest-card">
+          <ion-icon name="code-slash" color="primary"></ion-icon>
+          <h4>LED Programming</h4>
+          <p>Expert in creating patterns and animations</p>
+        </div>
+        
+        <div class="interest-card">
+          <ion-icon name="school" color="success"></ion-icon>
+          <h4>STEAM Education</h4>
+          <p>Passionate about teaching and learning</p>
+        </div>
+        
+        <div class="interest-card">
+          <ion-icon name="people" color="warning"></ion-icon>
+          <h4>Community</h4>
+          <p>Active member of the EduBox community</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
