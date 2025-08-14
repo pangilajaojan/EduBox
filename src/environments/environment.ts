@@ -6,11 +6,11 @@ export const environment = {
   production: false,
   firebase: {
     apiKey: "AIzaSyDAPhGAb4hDaPGT_Vy60zVm_pZGEgpyPws",
-    authDomain: "edubox.firebaseapp.com",
-    projectId: "edubox",
-    storageBucket: "edubox.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdefghijklmnop"
+    authDomain: "edubox-48c54.firebaseapp.com",
+    projectId: "edubox-48c54",
+    storageBucket: "edubox-48c54.firebasestorage.app",
+    messagingSenderId: "456233826793",
+    appId: "1:456233826793:web:2d4da57204ca5e33d6f378"
   }
 };
 

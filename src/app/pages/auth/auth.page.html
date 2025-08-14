@@ -10,11 +10,13 @@
 
     <div class="auth-card">
       <div class="auth-header">
-        <h2>{{ isLogin ? 'Welcome Back!' : 'Join EduBox' }}</h2>
-        <p>{{ isLogin ? 'Sign in to continue your learning journey' : 'Start your coding adventure today' }}</p>
+        <h2 *ngIf="isLogin">Welcome Back!</h2>
+        <h2 *ngIf="!isLogin">Join EduBox</h2>
+        <p *ngIf="isLogin">Sign in to continue your learning journey</p>
+        <p *ngIf="!isLogin">Start your coding adventure today</p>
       </div>
 
-      <form (ngSubmit)="isLogin ? login() : register()" class="auth-form">
+      <form (ngSubmit)="isLogin ? login() : register()" class="auth-form" autocomplete="off">
         <div class="form-group" *ngIf="!isLogin">
           <ion-label position="stacked">Full Name</ion-label>
           <ion-input 
@@ -22,7 +24,9 @@
             [(ngModel)]="name" 
             name="name"
             placeholder="Enter your full name"
-            class="custom-input">
+            class="custom-input"
+            required
+            autocomplete="off">
           </ion-input>
         </div>
 
@@ -33,7 +37,9 @@
             [(ngModel)]="email" 
             name="email"
             placeholder="Enter your email"
-            class="custom-input">
+            class="custom-input"
+            required
+            autocomplete="off">
           </ion-input>
         </div>
 
@@ -44,7 +50,9 @@
             [(ngModel)]="password" 
             name="password"
             placeholder="Enter your password"
-            class="custom-input">
+            class="custom-input"
+            required
+            autocomplete="off">
           </ion-input>
         </div>
 
@@ -55,7 +63,9 @@
             [(ngModel)]="confirmPassword" 
             name="confirmPassword"
             placeholder="Confirm your password"
-            class="custom-input">
+            class="custom-input"
+            required
+            autocomplete="off">
           </ion-input>
         </div>
 
@@ -71,8 +81,9 @@
 
       <div class="auth-footer">
         <p>
-          {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
-          <a href="#" (click)="toggleMode()" class="toggle-link">
+          <span *ngIf="isLogin">Don't have an account?</span>
+          <span *ngIf="!isLogin">Already have an account?</span>
+          <a href="#" (click)="toggleMode(); $event.preventDefault()" class="toggle-link">
             {{ isLogin ? 'Sign Up' : 'Sign In' }}
           </a>
         </p>
