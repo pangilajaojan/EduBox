@@ -1,7 +1,10 @@
 {
   "name": "EduBox",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
   },
   "type": "angular-standalone"
 }
