@@ -165,7 +165,7 @@
     </div>
 
     <!-- Empty State -->
-    <div class="empty-state" *ngIf="availableDevices.filter(d => d.status === 'available').length === 0">
+    <div class="empty-state" *ngIf="availableDevicesCount === 0">
       <ion-icon name="bluetooth" color="medium" class="empty-icon"></ion-icon>
       <h3>No devices found</h3>
       <p>Start scanning to discover nearby LED cube devices</p>
@@ -201,7 +201,7 @@
           <ion-icon name="battery-charging" color="white"></ion-icon>
         </div>
         <div class="stat-content">
-          <h3>{{ Math.round(availableDevices.reduce((sum, d) => sum + d.battery, 0) / availableDevices.length) }}%</h3>
+          <h3>{{ averageBattery }}%</h3>
           <p>Avg Battery</p>
         </div>
       </div>
@@ -211,7 +211,7 @@
           <ion-icon name="code" color="white"></ion-icon>
         </div>
         <div class="stat-content">
-          <h3>{{ availableDevices.filter(d => d.type === 'LED Cube').length }}</h3>
+          <h3>{{ ledCubeDevicesCount }}</h3>
           <p>LED Cubes</p>
         </div>
       </div>

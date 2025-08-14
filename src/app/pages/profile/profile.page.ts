@@ -54,7 +54,7 @@ export class ProfilePage {
     private auth: Auth,
     private toastController: ToastController
   ) {
-    this.auth.onAuthStateChanged((user) => {
+    this.auth.onAuthStateChanged((user: User | null) => {
       this.user = user;
       if (user) {
         this.loadProfileData();
@@ -136,5 +136,10 @@ export class ProfilePage {
     }, 0);
     
     return (totalPoints % 100);
+  }
+
+  // Computed properties for template
+  get unlockedAchievementsCount(): number {
+    return this.achievements.filter(a => a.unlocked).length;
   }
 }

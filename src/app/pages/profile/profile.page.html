@@ -140,7 +140,7 @@
 
   <!-- Achievements -->
   <div class="achievements-section">
-    <h2>Achievements ({{ achievements.filter(a => a.unlocked).length }}/{{ achievements.length }})</h2>
+    <h2>Achievements ({{ unlockedAchievementsCount }}/{{ achievements.length }})</h2>
     <div class="achievements-grid">
       <div class="achievement-card" *ngFor="let achievement of achievements" [class.unlocked]="achievement.unlocked">
         <div class="achievement-icon" [style.background-color]="achievement.color">

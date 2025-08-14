@@ -49,6 +49,21 @@ export class DevicesPage {
 
   connectedDevices = this.availableDevices.filter(device => device.status === 'connected');
 
+  // Computed properties for template
+  get availableDevicesCount(): number {
+    return this.availableDevices.filter(d => d.status === 'available').length;
+  }
+
+  get ledCubeDevicesCount(): number {
+    return this.availableDevices.filter(d => d.type === 'LED Cube').length;
+  }
+
+  get averageBattery(): number {
+    if (this.availableDevices.length === 0) return 0;
+    const total = this.availableDevices.reduce((sum, d) => sum + d.battery, 0);
+    return Math.round(total / this.availableDevices.length);
+  }
+
   startScan() {
     this.isScanning = true;
     

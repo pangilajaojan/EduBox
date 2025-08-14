@@ -9,7 +9,7 @@ import { Auth, signOut } from '@angular/fire/auth';
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  imports: [CommonModule, IonicModule, RouterModule]
 })
 export class LandingPage {
   selectedTab = 'dashboard';

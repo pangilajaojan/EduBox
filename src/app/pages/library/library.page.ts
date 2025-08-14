@@ -249,4 +249,15 @@ function updateFire() {
     };
     return colors[type] || '#17a2b8';
   }
+
+  getCategoryDescription(category: string): string {
+    const descriptions: { [key: string]: string } = {
+      'animation': 'Dynamic LED animations and effects',
+      'pattern': 'Static LED patterns and designs',
+      'game': 'Interactive LED cube games',
+      'education': 'Educational LED cube projects',
+      'premium': 'Advanced and premium content'
+    };
+    return descriptions[category] || 'LED cube projects and presets';
+  }
 }
