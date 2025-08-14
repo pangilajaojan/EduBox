@@ -146,33 +146,26 @@
     <div class="examples-grid">
       <div class="example-card">
         <h4>Basic Animation</h4>
-        <pre><code>function loop() {
-  for (let i = 0; i < 64; i++) {
-    cube.setPixel(i, randomColor());
-  }
-  cube.show();
-  delay(100);
-}</code></pre>
+        <p>Create a basic LED cube animation by setting pixels and showing the result.</p>
+        <ion-button fill="outline" size="small" (click)="loadTemplate('basic')">
+          Load Basic Template
+        </ion-button>
       </div>
       
       <div class="example-card">
         <h4>Pattern Generator</h4>
-        <pre><code>function createPattern() {
-  let pattern = [];
-  for (let i = 0; i < 64; i++) {
-    pattern[i] = (i % 2 === 0) ? RED : BLUE;
-  }
-  return pattern;
-}</code></pre>
+        <p>Generate patterns by creating arrays of colors and applying them to the cube.</p>
+        <ion-button fill="outline" size="small" (click)="loadTemplate('pattern')">
+          Load Pattern Template
+        </ion-button>
       </div>
       
       <div class="example-card">
         <h4>Interactive Control</h4>
-        <pre><code>function handleInput(x, y, z) {
-  let index = x + y * 4 + z * 16;
-  cube.setPixel(index, getCurrentColor());
-  cube.show();
-}</code></pre>
+        <p>Handle user input to control individual LEDs on the cube.</p>
+        <ion-button fill="outline" size="small" (click)="loadTemplate('interactive')">
+          Load Interactive Template
+        </ion-button>
       </div>
     </div>
   </div>

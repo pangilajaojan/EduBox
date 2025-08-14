@@ -190,4 +190,21 @@ function loop() {
     this.code = '';
     this.output += 'Code editor cleared.\n';
   }
+
+  loadTemplate(type: string) {
+    const templates: { [key: string]: string } = {
+      'rainbow': '// Rainbow wave animation\nfor (let i = 0; i < 64; i++) {\n  cube.setPixel(i, rainbow(i));\n}\ncube.show();',
+      'wave': '// Wave animation\nfor (let x = 0; x < 4; x++) {\n  for (let y = 0; y < 4; y++) {\n    for (let z = 0; z < 4; z++) {\n      let index = x + y * 4 + z * 16;\n      cube.setPixel(index, waveColor(x + y + z));\n    }\n  }\n}\ncube.show();',
+      'spiral': '// Spiral animation\nlet pattern = [];\nfor (let i = 0; i < 64; i++) {\n  pattern[i] = spiralColor(i);\n}\ncube.setPattern(pattern);\ncube.show();',
+      'game': '// Simple game template\nlet score = 0;\nfunction gameLoop() {\n  // Game logic here\n  cube.show();\n  delay(100);\n}',
+      'basic': '// Basic LED cube animation\nfor (let i = 0; i < 64; i++) {\n  cube.setPixel(i, randomColor());\n}\ncube.show();\ndelay(100);',
+      'pattern': '// Create alternating pattern\nlet pattern = [];\nfor (let i = 0; i < 64; i++) {\n  pattern[i] = (i % 2 === 0) ? RED : BLUE;\n}\ncube.setPattern(pattern);\ncube.show();',
+      'interactive': '// Handle user input\nfunction handleInput(x, y, z) {\n  let index = x + y * 4 + z * 16;\n  cube.setPixel(index, getCurrentColor());\n  cube.show();\n}'
+    };
+    
+    if (templates[type]) {
+      this.code = templates[type];
+      this.output += `Loaded ${type} template\n`;
+    }
+  }
 }
