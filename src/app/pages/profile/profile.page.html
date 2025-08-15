@@ -1,216 +1,192 @@
+<!-- Background Pattern -->
+<div class="bg-pattern">
+  <div class="circle circle-1"></div>
+  <div class="circle circle-2"></div>
+  <div class="circle circle-3"></div>
+</div>
+
 <div class="profile-container">
-  <div class="profile-header">
-    <div class="profile-avatar">
-      <ion-avatar>
-        <img [src]="user?.photoURL || 'assets/icon/favicon.png'" alt="Profile">
-      </ion-avatar>
-      <div class="profile-info">
-        <h1>{{ profileData.displayName || 'EduBox User' }}</h1>
-        <p class="user-level">Level {{ getLevel() }} • {{ profileData.location }}</p>
-        <p class="user-bio">{{ profileData.bio }}</p>
-      </div>
-    </div>
-    
-    <div class="profile-actions">
-      <ion-button 
-        (click)="startEditing()" 
-        *ngIf="!isEditing"
-        fill="outline"
-        color="primary">
-        <ion-icon name="create" slot="start"></ion-icon>
-        Edit Profile
-      </ion-button>
-      
-      <div class="edit-actions" *ngIf="isEditing">
-        <ion-button 
-          (click)="saveProfile()" 
-          color="success">
-          <ion-icon name="checkmark" slot="start"></ion-icon>
-          Save
-        </ion-button>
-        <ion-button 
-          (click)="cancelEditing()" 
-          fill="outline"
-          color="medium">
-          <ion-icon name="close" slot="start"></ion-icon>
-          Cancel
-        </ion-button>
-      </div>
-    </div>
+  <!-- Loading State -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
   </div>
 
-  <!-- Level Progress -->
-  <div class="level-section">
-    <div class="level-info">
-      <h3>Level {{ getLevel() }}</h3>
-      <p>{{ getLevelProgress() }}/100 XP to next level</p>
+  <!-- Profile Header -->
+  <header class="profile-header">
+    <div class="profile-content">
+      <div class="profile-avatar" (click)="changeAvatar()">
+        {{ getInitials(profileData.displayName) || '👤' }}
+      </div>
+      <div class="profile-name">{{ profileData.displayName || 'EduBox User' }}</div>
+      <div class="profile-role">
+        Advanced Student •
+        {{ profileData?.skills ? profileData.skills.split(',')[0] : 'Coding Enthusiast' }}
+      </div>
+      <div class="profile-stats">
+        <div class="stat-item">
+          <div class="stat-number">{{ getTotalXP() }}</div>
+          <div class="stat-label">XP Points</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ getCompletedCount() }}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ unlockedAchievementsCount }}</div>
+          <div class="stat-label">Badges</div>
+        </div>
+      </div>
     </div>
-    <div class="level-progress">
+  </header>
+
+  <!-- Level Progress -->
+  <section class="level-progress">
+    <div class="level-header">
+      <div class="level-title">Level {{ getLevel() }}</div>
+      <div class="level-badge">{{ getLevelBadge() }}</div>
+    </div>
+    <div class="progress-container">
       <div class="progress-bar">
         <div class="progress-fill" [style.width.%]="getLevelProgress()"></div>
       </div>
     </div>
-  </div>
+    <div class="progress-text">
+      <span>{{ getCurrentXP() }} / {{ getNextLevelXP() }} XP</span>
+      <span>{{ getXPToNextLevel() }} XP to Level {{ getLevel() + 1 }}</span>
+    </div>
+  </section>
 
-  <!-- Profile Form (when editing) -->
-  <div class="profile-form-section" *ngIf="isEditing">
-    <div class="form-card">
-      <h3>Edit Profile Information</h3>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <ion-label position="stacked">Display Name *</ion-label>
-          <ion-input 
-            [(ngModel)]="profileData.displayName" 
-            name="displayName"
-            placeholder="Enter your display name"
-            required>
-          </ion-input>
-        </div>
-        
-        <div class="form-group">
-          <ion-label position="stacked">Email</ion-label>
-          <ion-input 
-            [(ngModel)]="profileData.email" 
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            readonly>
-          </ion-input>
-        </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="quick-action" (click)="editProfile()">
+        <div class="quick-action-icon">✏️</div>
+        <div class="quick-action-title">Edit Profile</div>
+        <div class="quick-action-desc">Update info & preferences</div>
       </div>
-
-      <div class="form-group">
-        <ion-label position="stacked">Bio</ion-label>
-        <ion-textarea 
-          [(ngModel)]="profileData.bio" 
-          name="bio"
-          placeholder="Tell us about yourself..."
-          rows="3">
-        </ion-textarea>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <ion-label position="stacked">Location</ion-label>
-          <ion-input 
-            [(ngModel)]="profileData.location" 
-            name="location"
-            placeholder="Enter your location">
-          </ion-input>
-        </div>
-        
-        <div class="form-group">
-          <ion-label position="stacked">Website</ion-label>
-          <ion-input 
-            [(ngModel)]="profileData.website" 
-            name="website"
-            type="url"
-            placeholder="Enter your website">
-          </ion-input>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <ion-label position="stacked">Skills</ion-label>
-        <ion-input 
-          [(ngModel)]="profileData.skills" 
-          name="skills"
-          placeholder="Enter your skills (comma separated)">
-        </ion-input>
+      <div class="quick-action" (click)="viewCertificates()">
+        <div class="quick-action-icon">🏆</div>
+        <div class="quick-action-title">Certificates</div>
+        <div class="quick-action-desc">View achievements</div>
       </div>
     </div>
-  </div>
 
-  <!-- Statistics -->
-  <div class="stats-section">
-    <h2>Your Statistics</h2>
-    <div class="stats-grid">
-      <div class="stat-card" *ngFor="let stat of stats">
-        <div class="stat-icon">
-          <ion-icon [name]="stat.icon" color="primary"></ion-icon>
-        </div>
-        <div class="stat-content">
-          <h3 class="stat-value">{{ stat.value }}</h3>
-          <p class="stat-label">{{ stat.label }}</p>
+    <!-- Achievements -->
+    <div class="section">
+      <h3 class="section-title">🏅 My Badges</h3>
+      <div class="achievement-grid">
+        <div class="achievement-item"
+             *ngFor="let achievement of achievements"
+             [class.locked]="!achievement?.unlocked"
+             (click)="viewAchievement(achievement)">
+          <span class="achievement-icon">
+            {{ achievement?.unlocked ? (achievement?.emoji || '🏆') : '🔒' }}
+          </span>
+          <div class="achievement-title">{{ achievement?.title || 'Unknown Badge' }}</div>
+          <div class="achievement-desc">{{ achievement?.description || 'No description available' }}</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Achievements -->
-  <div class="achievements-section">
-    <h2>Achievements ({{ unlockedAchievementsCount }}/{{ achievements.length }})</h2>
-    <div class="achievements-grid">
-      <div class="achievement-card" *ngFor="let achievement of achievements" [class.unlocked]="achievement.unlocked">
-        <div class="achievement-icon" [style.background-color]="achievement.color">
-          <ion-icon [name]="achievement.icon" color="white"></ion-icon>
-        </div>
-        <div class="achievement-content">
-          <h4>{{ achievement.title }}</h4>
-          <p>{{ achievement.description }}</p>
-        </div>
-        <div class="achievement-status">
-          <ion-icon 
-            [name]="achievement.unlocked ? 'checkmark-circle' : 'lock-closed'" 
-            [color]="achievement.unlocked ? 'success' : 'medium'">
-          </ion-icon>
+    <!-- Recent Activity -->
+    <div class="section">
+      <h3 class="section-title">📈 Recent Activity</h3>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivity">
+          <div class="activity-header">
+            <div class="activity-icon">{{ activity?.emoji || '✅' }}</div>
+            <div class="activity-info">
+              <div class="activity-title">{{ activity?.action || 'No Action' }}</div>
+              <div class="activity-desc">{{ activity?.item || 'No Item' }}</div>
+            </div>
+            <div class="activity-time">{{ activity?.time || '' }}</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Recent Activity -->
-  <div class="activity-section">
-    <h2>Recent Activity</h2>
-    <div class="activity-list">
-      <div class="activity-item" *ngFor="let activity of recentActivity">
-        <div class="activity-icon">
-          <ion-icon [name]="activity.icon" color="primary"></ion-icon>
+    <!-- Settings -->
+    <div class="section">
+      <h3 class="section-title">⚙️ Settings</h3>
+      <div class="settings-list">
+        <div class="settings-item" (click)="openSettings('account')">
+          <div class="settings-icon account">👤</div>
+          <div class="settings-info">
+            <div class="settings-title">Account Settings</div>
+            <div class="settings-desc">Manage your account information</div>
+          </div>
+          <span class="settings-arrow">›</span>
         </div>
-        <div class="activity-content">
-          <p class="activity-text">
-            <strong>{{ activity.action }}</strong> 
-            <span class="activity-item">{{ activity.item }}</span>
-          </p>
-          <p class="activity-time">{{ activity.time }}</p>
+        <div class="settings-item" (click)="openSettings('notifications')">
+          <div class="settings-icon notification">🔔</div>
+          <div class="settings-info">
+            <div class="settings-title">Notifications</div>
+            <div class="settings-desc">Customize notification preferences</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" (click)="openSettings('privacy')">
+          <div class="settings-icon privacy">🔒</div>
+          <div class="settings-info">
+            <div class="settings-title">Privacy & Security</div>
+            <div class="settings-desc">Control your privacy settings</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" (click)="openSettings('help')">
+          <div class="settings-icon help">❓</div>
+          <div class="settings-info">
+            <div class="settings-title">Help & Support</div>
+            <div class="settings-desc">Get help and contact support</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" (click)="openSettings('about')">
+          <div class="settings-icon about">ℹ️</div>
+          <div class="settings-info">
+            <div class="settings-title">About EduBox</div>
+            <div class="settings-desc">App version and information</div>
+          </div>
+          <span class="settings-arrow">›</span>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <!-- Skills & Interests -->
-  <div class="skills-section">
-    <h2>Skills & Interests</h2>
-    <div class="skills-content">
-      <div class="skill-tags">
-        <ion-chip 
-          *ngFor="let skill of profileData.skills.split(',')" 
-          color="primary"
-          fill="outline">
-          {{ skill.trim() }}
-        </ion-chip>
+  <!-- Bottom Navigation -->
+  <footer class="bottom-nav">
+    <div class="nav-items">
+      <div class="nav-item" [class.active]="currentTab === 'home'" (click)="navigateTo('home')">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-label">Beranda</div>
       </div>
-      
-      <div class="interests-grid">
-        <div class="interest-card">
-          <ion-icon name="code-slash" color="primary"></ion-icon>
-          <h4>LED Programming</h4>
-          <p>Expert in creating patterns and animations</p>
-        </div>
-        
-        <div class="interest-card">
-          <ion-icon name="school" color="success"></ion-icon>
-          <h4>STEAM Education</h4>
-          <p>Passionate about teaching and learning</p>
-        </div>
-        
-        <div class="interest-card">
-          <ion-icon name="people" color="warning"></ion-icon>
-          <h4>Community</h4>
-          <p>Active member of the EduBox community</p>
-        </div>
+      <div class="nav-item" [class.active]="currentTab === 'workspace'" (click)="navigateTo('workspace')">
+        <div class="nav-icon">🎮</div>
+        <div class="nav-label">3D Space</div>
       </div>
+      <div class="nav-item" [class.active]="currentTab === 'coding'" (click)="navigateTo('coding')">
+        <div class="nav-icon">💻</div>
+        <div class="nav-label">Coding</div>
+      </div>
+      <div class="nav-item" [class.active]="currentTab === 'modules'" (click)="navigateTo('modules')">
+        <div class="nav-icon">📚</div>
+        <div class="nav-label">Modul</div>
+      </div>
+      <div class="nav-item active">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">Profile</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Achievement Modal -->
+  <div class="modal" role="dialog" aria-labelledby="achievement-title" [class.show]="showAchievementModal">
+    <div class="modal-content">
+      <div class="modal-icon">{{ selectedAchievement?.emoji || '🏆' }}</div>
+      <div class="modal-title">{{ selectedAchievement?.title || 'Achievement Unlocked!' }}</div>
+      <div class="modal-desc">{{ selectedAchievement?.description || 'Congratulations on your achievement!' }}</div>
+      <button class="modal-btn" (click)="closeModal()">Awesome!</button>
     </div>
   </div>
 </div>
