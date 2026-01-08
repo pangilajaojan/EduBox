@@ -1,210 +1,279 @@
-# EduBox - Platform Pembelajaran Inovatif
+# EduBox
 
-EduBox adalah platform pembelajaran inovatif yang dirancang untuk mengatasi tantangan peringkat PISA Indonesia dan mempersiapkan generasi muda untuk Revolusi Industri 5.0. Dengan memanfaatkan pseudo-hologram, AI, dan IoT, EduBox tidak hanya meningkatkan pemahaman konsep STEAM tetapi juga menumbuhkan keterampilan kritis dan minat belajar siswa.
-
-## 🚀 Fitur Utama
-
-### 🔐 Sistem Autentikasi
-- Login dan registrasi dengan Firebase Authentication
-- Keamanan data pengguna yang terjamin
-- Profile management yang lengkap
-
-### 💻 LED Cube Coding Studio
-- Editor kode real-time dengan syntax highlighting
-- Preview LED cube 3D yang interaktif
-- Dukungan multiple bahasa pemrograman (JavaScript, Python, C++, Arduino)
-- Library preset kode yang lengkap
-
-### 🌐 EduBox Community Forum
-- Forum diskusi untuk berbagi pengalaman
-- Kategori topik yang terorganisir
-- Sistem pencarian dan filter yang canggih
-- Posting dan komentar yang mudah
-
-### 📚 Library & Presets
-- Koleksi preset kode LED cube yang luas
-- Kategori: Animation, Pattern, Games, Education, Premium
-- Upload dan share project pribadi
-- Rating dan review system
-
-### 📱 Device Manager
-- Bluetooth scanning untuk LED cube devices
-- Connection management yang mudah
-- Firmware update otomatis
-- Device statistics dan monitoring
-
-## 🎨 Desain & UI/UX
-
-- **Color Scheme**: Menggunakan warna brand EduBox (#1972a4 dan #f5b202)
-- **Modern Design**: Interface yang clean, modern, dan responsive
-- **Mobile First**: Optimized untuk semua ukuran layar
-- **Interactive Elements**: Animasi dan transisi yang smooth
-
-## 🛠️ Teknologi yang Digunakan
-
-### Frontend
-- **Ionic Angular 8**: Framework hybrid mobile app
-- **Angular 20**: Latest version dengan standalone components
-- **TypeScript**: Type-safe development
-- **SCSS**: Advanced styling dengan variables dan mixins
-
-### Backend & Database
-- **Firebase**: 
-  - Authentication
-  - Firestore Database
-  - Storage
-  - Hosting
-
-### LED Cube Programming
-- **Custom JavaScript Libraries**:
-  - `main.js`: Core LED cube functionality
-  - `animation.js`: Predefined animations
-  - `pattern.js`: Pattern generation utilities
-
-## 📁 Struktur Proyek
-
-```
-EduBox/
-├── src/
-│   ├── app/
-│   │   ├── guards/           # Authentication guards
-│   │   ├── pages/            # Application pages
-│   │   │   ├── auth/         # Login & Register
-│   │   │   ├── landing/      # Main navigation
-│   │   │   ├── dashboard/    # User dashboard
-│   │   │   ├── coding/       # LED cube coding studio
-│   │   │   ├── forum/        # Community forum
-│   │   │   ├── library/      # Code library & presets
-│   │   │   ├── devices/      # Device manager
-│   │   │   └── profile/      # User profile
-│   │   ├── app.component.ts  # Root component
-│   │   ├── app.routes.ts     # Application routing
-│   │   └── app.config.ts     # App configuration
-│   ├── assets/
-│   │   └── js/               # LED cube JavaScript libraries
-│   │       ├── main.js       # Core functionality
-│   │       ├── animation.js  # Animation library
-│   │       └── pattern.js    # Pattern generation
-│   ├── environments/          # Environment configuration
-│   └── theme/                # Global styling
-├── resources/                 # App icons and splash screens
-└── package.json              # Dependencies
-```
-
-## 🚀 Cara Menjalankan
-
-### Prerequisites
-- Node.js 18+ 
-- npm atau yarn
-- Ionic CLI
-
-### Installation
-```bash
-# Clone repository
-git clone https://github.com/yourusername/edubox.git
-cd edubox
-
-# Install dependencies
-npm install
-
-# Install Ionic CLI globally (if not installed)
-npm install -g @ionic/cli
-
-# Run development server
-ionic serve
-```
-
-### Build untuk Production
-```bash
-# Build untuk web
-ionic build
-
-# Build untuk Android
-ionic capacitor build android
-
-# Build untuk iOS
-ionic capacitor build ios
-```
-
-## 🔧 Konfigurasi Firebase
-
-1. Buat project baru di [Firebase Console](https://console.firebase.google.com/)
-2. Enable Authentication, Firestore, dan Storage
-3. Update `src/environments/environment.ts` dengan konfigurasi Firebase Anda:
-
-```typescript
-export const environment = {
-  production: false,
-  firebase: {
-    apiKey: "your-api-key",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "your-sender-id",
-    appId: "your-app-id"
-  }
-};
-```
-
-## 📱 Fitur Mobile
-
-- **Responsive Design**: Optimized untuk semua ukuran layar
-- **Touch Gestures**: Swipe, tap, dan pinch gestures
-- **Offline Support**: Basic offline functionality
-- **Push Notifications**: Real-time updates (future feature)
-
-## 🎯 Target Pengguna
-
-- **Siswa SD/SMP/SMA**: Pembelajaran STEAM interaktif
-- **Guru**: Tools untuk mengajar programming
-- **Hobbyist**: LED cube programming enthusiasts
-- **Developer**: Platform untuk sharing code dan projects
-
-## 🔮 Roadmap
-
-### Phase 1 (Current)
-- ✅ Basic authentication system
-- ✅ LED cube coding studio
-- ✅ Community forum
-- ✅ Code library
-- ✅ Device management
-
-### Phase 2 (Next)
-- 🚧 AI-powered code suggestions
-- 🚧 Real-time collaboration
-- 🚧 Advanced 3D visualization
-- 🚧 Mobile app (iOS/Android)
-
-### Phase 3 (Future)
-- 📋 AR/VR integration
-- 📋 Machine learning patterns
-- 📋 IoT device support
-- 📋 International localization
-
-## 🤝 Kontribusi
-
-Kami menyambut kontribusi dari komunitas! Silakan:
-
-1. Fork repository ini
-2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-## 📄 Lisensi
-
-Proyek ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
-
-## 📞 Kontak
-
-- **Website**: [edubox.id](https://edubox.id)
-- **Email**: info@edubox.id
-- **GitHub**: [@edubox](https://github.com/edubox)
-
-## 🙏 Ucapan Terima Kasih
-
-Terima kasih kepada semua kontributor dan komunitas yang telah mendukung pengembangan EduBox. Mari kita bersama-sama memajukan pendidikan STEAM di Indonesia!
+Aplikasi pembelajaran interaktif untuk memudahkan proses belajar mengajar dengan pendekatan yang menyenangkan melalui simulasi 3D, coding, dan modul pembelajaran.
 
 ---
 
-**EduBox** - Mempersiapkan Generasi Muda untuk Revolusi Industri 5.0 🚀
+## 📱 Cara Menggunakan
+
+### 1. Login / Daftar
+
+**Login:**
+- Buka aplikasi EduBox
+- Masukkan email dan password Anda
+- Klik tombol "Login"
+- Jika belum punya akun, klik "Daftar" untuk membuat akun baru
+
+**Daftar:**
+- Klik tombol "Daftar" di halaman login
+- Isi form pendaftaran dengan data Anda
+- Buat password yang kuat
+- Klik "Daftar" untuk menyelesaikan pendaftaran
+
+**Lupa Password:**
+- Klik "Lupa Password" di halaman login
+- Masukkan email Anda
+- Ikuti instruksi yang dikirim ke email untuk reset password
+
+---
+
+### 2. Halaman Beranda (Home)
+
+Setelah login, Anda akan masuk ke halaman beranda yang menampilkan:
+
+**Informasi Pengguna:**
+- Foto profil atau inisial nama
+- Nama pengguna
+- Role (Student/Teacher)
+- Level pengguna
+
+**Fitur Utama (Quick Access):**
+- 🎮 **3D Workspace** - Simulator LED Matrix
+- 💻 **Manual Coding** - Code Editor
+- 📖 **Modul Belajar** - Materi & Tutorial
+- 🏆 **Leaderboard** - Ranking & Pencapaian
+
+**Konten:**
+- **Carousel/Banner** - Informasi dan pengumuman penting
+- **Berita Terbaru** - Update dan berita terkini
+- **Forum Diskusi** - Thread diskusi dari pengguna lain
+- **Notifikasi** - Klik ikon bel untuk melihat notifikasi
+
+**Navigasi:**
+- Gunakan bottom navigation bar di bagian bawah untuk akses cepat ke fitur utama
+
+---
+
+### 3. 3D Workspace
+
+Menggunakan simulator LED Matrix untuk visualisasi proyek:
+
+- Buka menu "3D Workspace" dari bottom navigation atau halaman home
+- Aplikasi akan menampilkan workspace 3D interaktif
+- Fitur yang tersedia:
+  - Visualisasi proyek dalam bentuk 3D
+  - Simulator LED Matrix yang dapat diinteraksikan
+  - Eksperimen dan pembelajaran visual
+  - Simulasi real-time
+- Gunakan kontrol untuk memanipulasi visualisasi
+- Simpan proyek Anda untuk dilanjutkan nanti
+
+---
+
+### 4. Manual Coding
+
+Menggunakan code editor untuk menulis dan mengedit kode:
+
+- Buka menu "Coding" dari bottom navigation atau halaman home
+- Aplikasi akan menampilkan code editor
+- Fitur yang tersedia:
+  - **Code Editor** dengan syntax highlighting
+  - Menulis dan mengedit kode secara manual
+  - Testing dan simulasi kode
+  - Support untuk Arduino code (contoh: `led_cube_4x4x4_serial.ino`)
+  - Auto-save untuk mencegah kehilangan kode
+- Tulis kode Anda di editor
+- Klik "Run" atau "Simulate" untuk menguji kode
+- Lihat hasil dan error messages jika ada
+- Simpan workspace untuk dilanjutkan nanti
+
+---
+
+### 5. Modul Belajar
+
+Mengakses materi pembelajaran dan tutorial:
+
+- Buka menu "Modul" dari bottom navigation atau halaman home
+- Aplikasi akan menampilkan daftar modul pembelajaran
+- Fitur yang tersedia:
+  - **Daftar Modul** - Semua modul pembelajaran tersedia
+  - **Kategori** - Filter modul berdasarkan kategori
+  - **Tag** - Cari modul berdasarkan tag
+  - **Progress Tracking** - Lihat progress belajar Anda
+  - **Materi Interaktif** - Tutorial dan materi pembelajaran
+- Pilih modul yang ingin dipelajari
+- Baca materi dan ikuti tutorial
+- Selesaikan latihan untuk mendapatkan poin
+- Track progress Anda di setiap modul
+
+---
+
+### 6. Profil Pengguna
+
+Mengelola informasi profil dan pengaturan:
+
+- Klik avatar/foto profil di pojok kanan atas halaman home
+- Atau buka menu "Profile" dari bottom navigation
+- Halaman profil menampilkan:
+  - **Informasi Profil** - Nama, email, role, level
+  - **Foto Profil** - Upload atau ubah foto profil
+  - **Statistik** - Level, poin, achievement
+  - **Menu Pengaturan** - Akses ke pengaturan aplikasi
+- Fitur yang tersedia:
+  - Edit informasi profil
+  - Ubah foto profil
+  - Lihat statistik dan pencapaian
+  - Akses ke halaman About, Help & Support, Privacy Policy
+  - Logout dari aplikasi
+
+---
+
+### 7. Halaman Informasi
+
+**About:**
+- Buka dari menu Profile
+- Lihat informasi tentang aplikasi EduBox
+- Versi aplikasi: 1.0.0
+- Fitur-fitur unggulan
+- Informasi tim pengembang
+
+**Help & Support:**
+- Buka dari menu Profile
+- FAQ (Pertanyaan yang sering ditanyakan)
+- Panduan penggunaan aplikasi
+- Kontak support jika butuh bantuan
+- Troubleshooting masalah umum
+
+**Privacy Policy:**
+- Buka dari menu Profile
+- Baca kebijakan privasi aplikasi
+- Ketentuan penggunaan
+- Informasi tentang data pengguna
+
+---
+
+### 8. Logout
+
+- Buka halaman Profile
+- Scroll ke bawah
+- Klik tombol "Logout"
+- Konfirmasi logout
+- Anda akan keluar dari aplikasi dan kembali ke halaman login
+
+---
+
+## 🔧 Fungsi-Fungsi Utama
+
+### 📊 Dashboard & Analytics
+- Menampilkan informasi pengguna (nama, level, role)
+- Quick access ke semua fitur utama
+- Carousel dengan informasi penting
+- News feed dengan update terbaru
+- Forum diskusi untuk interaksi sosial
+- Sistem notifikasi
+
+### 🎮 3D Workspace
+- Simulator LED Matrix interaktif
+- Visualisasi proyek dalam bentuk 3D
+- Workspace untuk eksperimen
+- Simulasi real-time
+- Penyimpanan proyek
+
+### 💻 Code Editor
+- Editor dengan syntax highlighting
+- Support untuk berbagai bahasa pemrograman
+- Testing dan simulasi kode
+- Support Arduino code
+- Auto-save workspace
+- Error detection dan debugging
+
+### 📖 Modul Pembelajaran
+- Materi pembelajaran interaktif
+- Tutorial step-by-step
+- Kategori dan tag untuk organisasi
+- Progress tracking per modul
+- Sistem poin dan achievement
+- Latihan dan quiz
+
+### 🏆 Gamifikasi
+- Sistem poin dan achievement
+- Leaderboard untuk ranking
+- Level system untuk tracking progress
+- Badge dan penghargaan
+- Streak harian
+
+### 💬 Fitur Sosial
+- Forum diskusi untuk siswa dan guru
+- News feed dengan update terbaru
+- Notifikasi aplikasi
+- Interaksi antar pengguna
+
+### 💾 Penyimpanan Data
+- Semua data tersimpan di Firebase
+- Progress belajar tersinkronisasi
+- Proyek coding tersimpan otomatis
+- Riwayat aktivitas dapat dilihat kapan saja
+- Backup data otomatis
+
+---
+
+## 📝 Tips Penggunaan
+
+1. **Lakukan Login Rutin**
+   - Login setiap hari untuk mendapatkan poin dan mempertahankan streak
+   - Cek notifikasi untuk update penting
+
+2. **Gunakan 3D Workspace**
+   - Eksperimen dengan berbagai konfigurasi LED Matrix
+   - Simpan proyek yang menarik untuk referensi nanti
+   - Gunakan simulasi untuk memahami konsep visual
+
+3. **Praktik Coding**
+   - Gunakan code editor untuk latihan coding
+   - Coba berbagai contoh kode yang tersedia
+   - Simpan workspace secara berkala
+   - Gunakan fitur testing untuk memvalidasi kode
+
+4. **Ikuti Modul Secara Berurutan**
+   - Mulai dari modul dasar ke tingkat lanjut
+   - Selesaikan setiap modul untuk mendapatkan poin
+   - Track progress Anda untuk melihat perkembangan
+
+5. **Aktif di Forum**
+   - Berpartisipasi dalam diskusi forum
+   - Ajukan pertanyaan jika ada yang kurang jelas
+   - Bantu pengguna lain dengan berbagi pengetahuan
+
+6. **Cek Profil Secara Berkala**
+   - Lihat statistik dan achievement Anda
+   - Update profil jika ada perubahan
+   - Gunakan menu Help & Support jika butuh bantuan
+
+7. **Koneksi Internet**
+   - Pastikan koneksi internet stabil untuk sinkronisasi data
+   - Beberapa fitur memerlukan koneksi internet aktif
+
+8. **Backup Data**
+   - Data Anda tersimpan otomatis di cloud
+   - Pastikan logout dengan benar untuk menyimpan perubahan terakhir
+
+---
+
+## 🛠️ Teknologi
+
+- **Framework**: Ionic Angular
+- **Backend**: Firebase (Authentication, Firestore)
+- **Platform**: Android (Cordova)
+- **Bahasa**: TypeScript
+- **Styling**: SCSS
+
+---
+
+## 📄 Informasi Versi
+
+- **Versi Aplikasi**: 1.0.0
+- **Tahun**: 2025
+
+---
+
+Selamat menggunakan EduBox! 🎓✨
